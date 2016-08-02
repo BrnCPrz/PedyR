@@ -1,0 +1,13 @@
+Package: pedyR
+Type: Package
+Title: Handles genealogical structured data
+Version: 0.1.3
+Author: B. C. Perez <brunocpvet@usp.br> / G. A. Oliveira Junior <gersonjr@gmail.com>
+Maintainer: B. C. Perez <brunocpvet@usp.br> / G. A. Oliveira Junior <gersonjr@gmail.com>
+Description: Package that deals with pedigree files.
+License: GPL
+LazyData: TRUE
+Imports:
+    Rcpp (>= 0.12.5)
+LinkingTo: Rcpp
+RoxygenNote: 5.0.1
