@@ -38,12 +38,14 @@ NumericVector aMatrix(NumericMatrix A, IntegerVector s, IntegerVector d) {
 
 // [[Rcpp::export]]
 IntegerVector calcGen(IntegerVector s, IntegerVector d, int nrow, IntegerVector genVec) {
+  int x; int y;
   for (int i = 0; i < nrow; i++) {
-    if (s(i) != 0 & d(i) != 0) {
-      int x = genVec(s(i)-1); int y = genVec(d(i)-1);
-      if (x < 0){x=0;}; if (y<0){y=0;};
+    if (s(i) == 0 & d(i) == 0)
+      genVec(i) = 0;
+    else {
+      if (s(i)-1 < 0) x = 0; else x = genVec(s(i)-1);
+      if (d(i)-1 < 0) y = 0; else y = genVec(d(i)-1);
       genVec(i) = std::max(x, y) + 1;
-
     }
   }
   return(genVec);
