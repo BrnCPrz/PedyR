@@ -2,7 +2,7 @@
 
 R package to deal with genealogical structured data (pedigrees)
 
-*next updates:*
+*upcoming updates:*
   * **getOrdPed()** - A function to order a pedigree using the Kahn's topological sorting algorithm 
 
 ## General Functions (version 0.1.3)
