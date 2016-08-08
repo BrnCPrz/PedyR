@@ -141,16 +141,17 @@ getGen <- function(pedigree){
 #' @details Kahn's algorithm is a topological sorting method commonly applied to networks. It's only feasible for acyclic directed graphs, so any cycles (ex. an individual that has itself as a parent) will return an error and must be corrected.
 #' @references Kahn, Arthur B. (1962), "Topological sorting of large networks", Communications of the ACM
 #'
-#' @return Character vector
+#' @return Integer vector
 #' @examples
-#' id = c(1,2,3,4,5,6,7,8,9,10)
-#' sire = c(0,0,1,1,3,5,5,5,7,7)
-#' dam = c(0,0,2,2,2,4,4,6,6,8)
+#' id = c("A","B","C","D","E","F","G","H","I","J","K")
+#' sire = c("0","0","0","0","A","A","C","A","G","G","A")
+#' dam = c("0","0","0","0","B","H","D","D","B","E","H")
 #' ped = as.data.frame(cbind(id,sire,dam))
 #' newOrd = getOrdPed(ped)
+#' pedReord = ped[ped$id[c(newOrd)],]
 #'
 #' @export
-getOrdPed <- function(pedigree){
+getOrdPed <- function(pedigree, verbose = FALSE){
 
   id = pedigree[,1]
   s = pedigree[,2]
@@ -167,7 +168,7 @@ getOrdPed <- function(pedigree){
       }
     }
   }
-  cat(in_degree, "\n")
+  if (verbose == TRUE) cat(in_degree, "\n")
   Q = c()
   for (i in 1:nrow){
     if (in_degree[i] == 0){
@@ -178,15 +179,15 @@ getOrdPed <- function(pedigree){
   order_list = c()
   while (length(Q)>0){
     u = Q[length(Q)]
-    cat("Q= ", Q, "u= ", u, "\n")
+    if (verbose == TRUE) cat("Q= ", Q, "u= ", u, "\n")
     Q = Q[-length(Q)]
     order_list = append(order_list, u, length(order_list))
 
     progeny_s = which(s %in% id[u])
     progeny_d = which(d %in% id[u])
 
-    cat("pr_s", progeny_s, "\n")
-    cat("pr_d", progeny_d, "\n")
+    if (verbose == TRUE) cat("pr_s", progeny_s, "\n")
+    if (verbose == TRUE) cat("pr_d", progeny_d, "\n")
 
     if (id[u] %in% s){
       for (i in progeny_s){
@@ -204,7 +205,7 @@ getOrdPed <- function(pedigree){
     }
     }
     }
-    cat("OrdLst= ", order_list, "\n")
+    if (verbose == TRUE) cat("OrdLst= ", order_list, "\n")
   }
 
   if (length(order_list) == length(id)){
