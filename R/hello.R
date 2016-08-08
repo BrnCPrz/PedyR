@@ -162,40 +162,58 @@ getOrdPed <- function(pedigree){
   for (i in 1:nrow) {
     if (pedigree[i,2] != 0) {
       in_degree[i] = in_degree[i] + 1
-    }
-  }
-  for (i in 1:nrow) {
     if (pedigree[i,3] != 0) {
       in_degree[i] = in_degree[i] + 1
+      }
     }
   }
-
+  cat(in_degree, "\n")
   Q = c()
   for (i in 1:nrow){
     if (in_degree[i] == 0){
-      Q = append(Q,id[i],0)
+      Q = append(Q, pedigree[i,1], 0)
     }
   }
 
   order_list = c()
-  while (length(Q)!=0){
+  while (length(Q)>0){
     u = Q[length(Q)]
-    order_list = append(order_list, u, length(order_list))
+    cat("Q= ", Q, "u= ", u, "\n")
     Q = Q[-length(Q)]
-    for (i in 1:nrow){
-      in_degree[i] = in_degree[i] -1
-      if (in_degree[i] == 0){
-        Q = append(Q, i, 0)
-      }
+    order_list = append(order_list, u, length(order_list))
+
+    progeny_s = which(s %in% id[u])
+    progeny_d = which(d %in% id[u])
+
+    cat("pr_s", progeny_s, "\n")
+    cat("pr_d", progeny_d, "\n")
+
+    if (id[u] %in% s){
+      for (i in progeny_s){
+        in_degree[i] = in_degree[i] - 1
+        if (in_degree[i] == 0){
+          Q = append(Q, id[i], 0)
     }
+    }
+    }
+    if (id[u] %in% d){
+      for (i in progeny_d){
+        in_degree[i] = in_degree[i] - 1
+        if (in_degree[i] == 0){
+          Q = append(Q, id[i], 0)
+    }
+    }
+    }
+    cat("OrdLst= ", order_list, "\n")
   }
+
   if (length(order_list) == length(id)){
     return(order_list)
   }
   else {
-    cat("At least one cycle detected")
+    cat("At least one cycle detected \n")
     cat("Individuals involved in cycles: ", Q)
     stop("Correct errors and try again.")
-  }
-  }
+  }}
+
 
