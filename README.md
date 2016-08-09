@@ -56,4 +56,5 @@ This project is licensed under the MIT License.
 
 ## References
 
-THE Meuwissen and Z Luo, 1992. Computing inbreeding coefficients in large populations. Genet. Sel. Evol. 24, 305-313.
+ * Meuwissen THE and Luo Z, 1992. Computing inbreeding coefficients in large populations. Genet. Sel. Evol. 24, 305-313.
+ * Kahn AB, 1962. "Topological sorting of large networks", Communications of the ACM.
