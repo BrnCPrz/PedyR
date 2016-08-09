@@ -3,9 +3,11 @@
 R package to deal with genealogical structured data (pedigrees)
 
 *upcoming updates:*
- 
-
-## General Functions (version 0.1.3)
+  * pedStats() - A function for more in depth description of a pedigree.
+  * getBdate() - Estimates a birth date for animals without that record in the pedigree.
+  * getFounder() - Calculates the effective number of founders for a pedigree.
+  
+## General Functions (version 0.1.4 - Aug 8, 2016)
 
 For now, PedyR package has the following functions:
 
@@ -17,7 +19,7 @@ Checks for the (most common) errors in pedigrees, such as duplicated ids, sire a
 
 ### getF()
 
-Calculates the inbreeding coefficient (see [1](http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-24-4-305)) for each individual in the pedigree.
+Calculates the inbreeding coefficient (see [[1](http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-24-4-305)]) for each individual in the pedigree.
 
 
 
@@ -28,7 +30,7 @@ Calculates the generation of each individual in the pedigree.
 
 ### getOrdPed()
 
-A function to order a pedigree using the Kahn's topological sorting algorithm [2](http://dl.acm.org/citation.cfm?id=369025). 
+A function to order a pedigree using the Kahn's topological sorting algorithm [[2](http://dl.acm.org/citation.cfm?id=369025)]. 
 
 ## Example:
 
