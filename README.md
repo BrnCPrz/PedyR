@@ -18,7 +18,7 @@ Checks for the (most common) errors in pedigrees, such as duplicated ids, sire a
 
 ### getF()
 
-Calculates the inbreeding coefficient (see [[1](http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-24-4-305)]) for each individual in the pedigree.
+Calculates the inbreeding coefficient [[1](http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-24-4-305)] for each individual in the pedigree.
 
 
 ### getGen()
