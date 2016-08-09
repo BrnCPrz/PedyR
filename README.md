@@ -1,6 +1,6 @@
 # PedyR
 
-R package to deal with genealogical structured data (pedigrees)
+R package to deal with pedigrees.
 
 *upcoming updates:*
   * pedStats() - A function for more in depth description of a pedigree.
