@@ -4,13 +4,13 @@
 \alias{getOrdPed}
 \title{Orders a pedigree (parents before offspring) using Kahn's Algorithm.}
 \usage{
-getOrdPed(pedigree)
+getOrdPed(pedigree, verbose = FALSE)
 }
 \arguments{
 \item{pedigree}{data.frame with three columns: id, sire and dam}
 }
 \value{
-Character vector
+Integer vector
 }
 \description{
 Orders a pedigree (parents before offspring) using Kahn's Algorithm.
@@ -19,11 +19,12 @@ Orders a pedigree (parents before offspring) using Kahn's Algorithm.
 Kahn's algorithm is a topological sorting method commonly applied to networks. It's only feasible for acyclic directed graphs, so any cycles (ex. an individual that has itself as a parent) will return an error and must be corrected.
 }
 \examples{
-id = c(1,2,3,4,5,6,7,8,9,10)
-sire = c(0,0,1,1,3,5,5,5,7,7)
-dam = c(0,0,2,2,2,4,4,6,6,8)
+id = c("A","B","C","D","E","F","G","H","I","J","K")
+sire = c("0","0","0","0","A","A","C","A","G","G","A")
+dam = c("0","0","0","0","B","H","D","D","B","E","H")
 ped = as.data.frame(cbind(id,sire,dam))
 newOrd = getOrdPed(ped)
+pedReord = ped[ped$id[c(newOrd)],]
 
 }
 \references{

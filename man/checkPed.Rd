@@ -4,7 +4,8 @@
 \alias{checkPed}
 \title{Checks for errors and conformities in a pedigree file}
 \usage{
-checkPed(pedigree, id = 1, sire = 2, dam = 3)
+checkPed(pedigree, id = 1, sire = 2, dam = 3, rmsingle = FALSE,
+  verbose = FALSE)
 }
 \arguments{
 \item{pedigree}{a data.frame with three columns: id, sire and dam}

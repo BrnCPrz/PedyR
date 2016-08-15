@@ -14,7 +14,7 @@
 #' checkPed(ped)
 #'
 #' @export
-checkPed <- function (pedigree, id=1, sire=2, dam=3) {
+checkPed <- function (pedigree, id=1, sire=2, dam=3, rmsingle = FALSE, verbose = FALSE) {
   options(warn=-1)
 
   if (missing(pedigree))
@@ -22,8 +22,6 @@ checkPed <- function (pedigree, id=1, sire=2, dam=3) {
 
   if (!is.data.frame(pedigree))
     stop (" Pedigree file must be a data.frame object! ")
-  #if (missing(ids))
-  #stop("  Need to specify the file with the interested id animals   ")
 
   anim = unique(as.character(pedigree[,id]))
   sires = unique(as.character(pedigree[,sire]))
@@ -38,29 +36,57 @@ checkPed <- function (pedigree, id=1, sire=2, dam=3) {
     cat(" Duplicated ids position are represented by -1! \n")
     pedigree[,1][duplicated(pedigree[,1])] = -1
     return(pedigree[,1])
-    #stop (" Duplicated ids detected")
   }
 
   sireclean = sires[sires!="0"]
   damclean = dams[dams!="0"]
   wrongsex = sireclean %in% damclean
-  #wrongid = anim %in% sireclean || anim %in% damclean
 
   if(TRUE %in% wrongsex) {
     stop (" Sire = Dam  ")
   }
-  #if(wrongid == "TRUE")
-  #	stop (" Anim = Sire or Anim = Dam")
 
-  cat(paste('Total number of animals = ',length(anim),sep=''),'\n')
+  # remove singleton animals (no parents or progeny in the pedigree)
+  if(rmsingle == TRUE){
+      singleton.vec <- pedigree[,1][pedigree[,2] == 0 & pedigree[,3]== 0 & !(pedigree[,1] %in% c(pedigree[,2], pedigree[,3]))]
+
+    if(length(singleton.vec) > 0) {
+        pedigree = pedigree[-(pedigree[,1] %in% singleton.vec),]
+    if (verbose == TRUE) cat("A total of", length(singleton.vec), "found and removed. \n")
+      }
+  }
+
+  # check for individuals in sire/dam that are not in id and add them as founders
+  if(any(!pedigree[,2] %in% pedigree[,1]))
+    sirenew <- data.frame(id = pedigree[which(!pedigree[,2] %in% pedigree[,1]), 2],
+                                                                sire = 0, dam = 0)
+  if(any(!pedigree[,3] %in% pedigree[,1]))
+    damnew <- data.frame(id = pedigree[which(!pedigree[,3] %in% pedigree[,1]), 3],
+                                                                sire = 0, dam = 0)
+
+  sirenew <- unique(subset(sirenew, id != 0))
+  damnew <- unique(subset(damnew, id != 0))
+
+  correctPed <- as.data.frame(rbind(sirenew, damnew, pedigree))
+
+  addFounders = FALSE
+
+  if(length(correctPed) > length(pedigree)) {
+    addFounders == TRUE
+    cat("Individuals appearing as sire/dam but not as individuals were added as founders. \n")
+  }
+
+  # wrapps up pedigree stats and output information
+  cat(paste('Total number of animals = ', length(anim),sep=''),'\n')
   #cat('  > Animal ids: ', anim, '\n')
-  cat(paste('Total number of unique sires = ',length(sireclean),sep=''),'\n')
+  cat(paste('Total number of unique sires = ', length(sireclean),sep=''),'\n')
   #cat('  > Sire ids: ', sireclean, '\n')
-  cat(paste('Total number of unique dams = ',length(damclean),sep=''),'\n')
+  cat(paste('Total number of unique dams = ', length(damclean),sep=''),'\n')
   #cat('  > Dam ids: ', damclean, '\n')
 
-  cat('Pedigree is OK!')
-  # return(pedigree)
+  cat('Pedigree is OK! \n')
+  if (addFounders == TRUE) return(correctPed)
+  else return(pedigree)
 }
 
 
@@ -153,6 +179,12 @@ getGen <- function(pedigree){
 #' @export
 getOrdPed <- function(pedigree, verbose = FALSE){
 
+  if (missing(pedigree))
+    stop("  Pedigree file not specified!  ")
+
+  if (!is.data.frame(pedigree))
+    stop (" Pedigree file must be a data.frame object! ")
+
   id = pedigree[,1]
   s = pedigree[,2]
   d = pedigree[,3]
@@ -205,7 +237,6 @@ getOrdPed <- function(pedigree, verbose = FALSE){
     }
     }
     }
-    if (verbose == TRUE) cat("OrdLst= ", order_list, "\n")
   }
 
   if (length(order_list) == length(id)){
