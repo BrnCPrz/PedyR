@@ -30,6 +30,10 @@ Calculates the generation of each individual in the pedigree.
 
 A function to order a pedigree using the Kahn's topological sorting algorithm [[2](http://dl.acm.org/citation.cfm?id=369025)]. 
 
+
+### effSize()
+
+Calculates the effective population size for a given pedigree using methods discribed in [[3](http://pendientedemigracion.ucm.es/info/prodanim/html/JP_Web_archivos/jbg810.pdf)]. 
 ## Example:
 
 ```
@@ -61,3 +65,4 @@ This project is licensed under the MIT License.
 
  * [[1](http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-24-4-305)] Meuwissen THE and Luo Z, 1992. Computing inbreeding coefficients in large populations. Genet. Sel. Evol. 24, 305-313.
  * [[2](http://dl.acm.org/citation.cfm?id=369025)] Kahn AB, 1962. "Topological sorting of large networks", Communications of the ACM.
+ * [[3](http://pendientedemigracion.ucm.es/info/prodanim/html/JP_Web_archivos/jbg810.pdf)] Gutiérrez, JP, Cervantes I, Goyache F, (2009). "Improving the estimation of realized effective populationsizes in farm animals", J. Anim. Breed. Genet., 126, 327-332.
